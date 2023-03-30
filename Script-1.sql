@@ -1,39 +1,51 @@
-use library;
+drop database if exists `goods`;
+create database if not exists `goods`;
 
-create table Libraries(
-	id_library int primary key,
-	amount_of_book int not null,
-	amount_authors int not null,
-	amount_rows int not null
+use `goods`;
+
+create table fabricator (
+	id_fabricator int primary key,
+	name varchar(45) not null,
+	country varchar(45) not null,
+	site varchar(45) 
 );
 
-create table author(
-	id_author int primary key,
-	id_library int not null,
-	full_name varchar(150) not null,
-	amount_books int not null,
-	foreign key (id_library) references Libraries(id_library)
+create table seller (
+	id_seller int primary key,
+	name varchar(45) not null,
+	adress varchar(45) not null,
+	phone_number int not null,
+	site varchar(45) not null
 );
 
-create table book(
+create table model (
+	id_model int primary key,
+	name varchar(45) not null,
+	id_fabricator int not null
+);
+
+create table good (
+	id_good int primary key,
+	name varchar(45)
+);
+
+
+create table price_list (
 	id int primary key,
-	name_of_book varchar(100) not null,
-	id_author int not null,
-	genre varchar(50) not null,
-	foreign key (id_author) references author(id_author),
-	foreign key (genre) references genres(genre)
+	id_seller int not null,
+	id_fabricator int not null,
+	id_good int not null,
+	id_model int not null,
+	price int not null,
+	foreign key (id_seller) references seller(id_seller) ON UPDATE CASCADE ON DELETE cascade,
+	foreign key (id_fabricator) references fabricator(id_fabricator) ON UPDATE CASCADE ON DELETE CASCADE,
+	foreign key (id_model) references model(id_model) ON UPDATE CASCADE ON DELETE CASCADE,
+	foreign key (id_good) references good(id_good) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-create table genres (
-	genre varchar(50) primary key,
-	№_row int not null
-);
 
-create table reader (
-	id int primary key,
-	name varchar(100) not null,
-	id_book int not null,
-	date_take_book date,
-	isReturn boolean default(0),
-	foreign key (id_book) references book(id)
-);
+alter table `model` add constraint fk_fabricator 
+	foreign key (id_fabricator) references fabricator(id_fabricator)
+	ON UPDATE CASCADE ON DELETE CASCADE;
+
+    
