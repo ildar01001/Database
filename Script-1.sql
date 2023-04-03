@@ -13,7 +13,7 @@ create table fabricator (
 create table seller (
 	id_seller int primary key,
 	name varchar(45) not null,
-	adress varchar(45) not null,
+	address varchar(45) not null,
 	phone_number int not null,
 	site varchar(45) not null
 );
