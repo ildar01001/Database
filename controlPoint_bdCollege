@@ -1,0 +1,112 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema bdCollege
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema bdCollege
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `bdCollege` DEFAULT CHARACTER SET utf8 ;
+USE `bdCollege` ;
+
+-- -----------------------------------------------------
+-- Table `bdCollege`.`teachers`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdCollege`.`teachers` (
+  `id` INT NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `experience` INT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdCollege`.`subjects`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdCollege`.`subjects` (
+  `id` INT NOT NULL,
+  `subject` VARCHAR(45) NOT NULL,
+  `teachers_id` INT NOT NULL,
+  PRIMARY KEY (`id`, `teachers_id`),
+  INDEX `fk_subjects_teachers1_idx` (`teachers_id` ASC) VISIBLE,
+  CONSTRAINT `fk_subjects_teachers1`
+    FOREIGN KEY (`teachers_id`)
+    REFERENCES `bdCollege`.`teachers` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdCollege`.`students`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdCollege`.`students` (
+  `id` INT NOT NULL,
+  `login` VARCHAR(45) NOT NULL,
+  `pass` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `pass_UNIQUE` (`pass` ASC) VISIBLE,
+  UNIQUE INDEX `login_UNIQUE` (`login` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdCollege`.`schedule`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdCollege`.`schedule` (
+  `id` INT NOT NULL,
+  `students_id` INT NOT NULL,
+  `teachers_id` INT NOT NULL,
+  PRIMARY KEY (`id`, `students_id`, `teachers_id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `fk_schedule_students1_idx` (`students_id` ASC) VISIBLE,
+  INDEX `fk_schedule_teachers1_idx` (`teachers_id` ASC) VISIBLE,
+  CONSTRAINT `fk_schedule_students1`
+    FOREIGN KEY (`students_id`)
+    REFERENCES `bdCollege`.`students` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_schedule_teachers1`
+    FOREIGN KEY (`teachers_id`)
+    REFERENCES `bdCollege`.`teachers` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `bdCollege`.`profile`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bdCollege`.`profile` (
+  `id` INT NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `sex` VARCHAR(45) NOT NULL,
+  `city` VARCHAR(45) NOT NULL,
+  `students_id` INT NOT NULL,
+  PRIMARY KEY (`id`, `students_id`),
+  INDEX `fk_profile_students1_idx` (`students_id` ASC) VISIBLE,
+  CONSTRAINT `fk_profile_students1`
+    FOREIGN KEY (`students_id`)
+    REFERENCES `bdCollege`.`students` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+INSERT INTO `students` VALUES (1089,'asa36@gmail.com','8761'),(1137,'nyasia20@millerparker.biz','633100837'),(1295,'qcorkery@reichel.com','93757979'),(1383,'dkassulke@hotmail.com','4271946'),(1410,'gjast@senger.com','574985'),(1415,'nannie.russel@schaden.org','98'),(1649,'prosacco.anabelle@gmail.com','16717880'),(1763,'kovacek.marjolaine@lemke.com','655'),(1921,'nasir02@yahoo.com','26920'),(2014,'garland.weimann@towne.com','96'),(2039,'nelle.welch@yahoo.com','128'),(2117,'elsa.walter@corkerycassin.info','24'),(2144,'stephany.schultz@white.com','88402703'),(2194,'kilback.clementina@weber.org','70658887'),(2199,'o\'connell.thaddeus@yahoo.com','20797'),(2282,'d\'amore.lucile@gmail.com','5572674'),(2303,'bashirian.alva@hickle.com','331398'),(2378,'braden50@hartmanngottlieb.info','146965417'),(2460,'samanta53@hotmail.com',''),(2504,'pfannerstill.sam@gmail.com','803038679'),(2515,'ullrich.zola@zemlakschumm.com','76704'),(2576,'zraynor@yahoo.com','25142'),(2598,'vtromp@yahoo.com','409147'),(2614,'omedhurst@klocko.info','157'),(2677,'elena.hackett@dicki.info','75386'),(2695,'genevieve.russel@schimmel.biz','22971'),(2715,'clare44@hotmail.com','6451'),(2886,'lavada22@gmail.com','4336084'),(2966,'xshields@gmail.com','9'),(3066,'ksenger@gmail.com','34984946'),(3085,'qkoch@borer.biz','653081'),(3122,'aschiller@gmail.com','62443'),(3163,'presley.davis@ziemeledner.org','960'),(3180,'hoppe.kasey@gmail.com','1586'),(3241,'zack32@hotmail.com','38636'),(3487,'qkautzer@morarfranecki.com','68645'),(3569,'forest78@blockherzog.net','1'),(3682,'mavis.cronin@gmail.com','3573107'),(3699,'wcole@yahoo.com','4687833'),(3723,'ashly38@yahoo.com','4'),(3735,'dariana.stiedemann@yahoo.com','985'),(3818,'tdenesik@mcdermott.net','4439343'),(3849,'rosanna.witting@yahoo.com','16176895'),(4267,'emie17@yahoo.com','225'),(4362,'hyatt.neva@hotmail.com','27'),(4531,'cortez.brekke@hotmail.com','98198'),(4533,'greenfelder.pablo@bergstrom.com','29880'),(4540,'stella.goldner@thompsonnicolas.com','30185'),(4753,'spencer.emiliano@gmail.com','96671954'),(4865,'russel.kamron@schowaltergerlach.com','7563'),(4905,'cummerata.damien@hotmail.com','8552'),(4955,'angelita68@yahoo.com','78552520'),(4990,'name55@gmail.com','342'),(5099,'mueller.kyler@wizaauer.biz','323'),(5182,'arielle.boehm@halvorson.info','57'),(5214,'denesik.stanton@satterfield.net','662'),(5428,'doug19@gmail.com','75741372'),(5515,'rsawayn@yahoo.com','178'),(5549,'donnelly.ayla@mcglynn.org','7810'),(5808,'adah.schuppe@braun.info','971564'),(5931,'howell.verna@connellyrempel.com','510293'),(5934,'shansen@yahoo.com','305'),(6095,'xbailey@yahoo.com','514'),(6104,'aylin.dietrich@macejkovicfay.com','477909'),(6109,'oankunding@gmail.com','61'),(6125,'wuckert.bradley@volkman.com','6724062'),(6191,'darwin.mohr@hotmail.com','493382'),(6291,'deckow.devin@champlin.info','4157017'),(6312,'roberts.raleigh@gmail.com','997585'),(6326,'javon.wisozk@yahoo.com','31'),(6495,'blick.emely@stamm.org','6432'),(6640,'leopold.champlin@hotmail.com','45320624'),(6657,'wiegand.pietro@yahoo.com','4688130'),(6912,'eterry@okeefe.com','50582799'),(6932,'xleannon@kuphal.com','3'),(6945,'prempel@daugherty.info','266114'),(7074,'dach.bria@hotmail.com','94175305'),(7169,'cartwright.velda@hotmail.com','388556733'),(7176,'qkulas@yahoo.com','40'),(7188,'emile.jerde@hotmail.com','76429952'),(7224,'polly06@leuschkerosenbaum.net','37744711'),(7263,'rkassulke@kozey.org','2083338'),(7358,'kelley90@larson.net','430'),(7522,'lorine.rowe@yahoo.com','9630107'),(7552,'zita.crona@yahoo.com','183'),(7728,'flockman@kshlerin.biz','27037125'),(7746,'luther84@ziemann.com','15'),(8048,'corkery.sonny@greenfelderstreich.com','56713887'),(8052,'everett87@botsford.info','63701'),(8300,'josue15@blanda.com','58'),(8431,'linwood56@kulas.com','396'),(8484,'vallie.macejkovic@grant.com','303206'),(8619,'ischulist@yahoo.com','20539'),(8747,'elliott73@gmail.com','6514'),(8779,'spinka.deron@howe.biz','868197'),(8860,'kessler.garnett@gmail.com','88841'),(9014,'oleta.maggio@thiel.biz','3222479'),(9389,'maya68@howellhackett.com','8207'),(9452,'roman45@yahoo.com','8'),(9925,'tmarquardt@gmail.com','34161345');
+INSERT INTO `teachers` VALUES (130,'Ollie',4),(250,'Eliseo',1),(391,'Kirsten',20),(489,'Kathleen',26),(554,'Hermann',28),(559,'Marta',24),(619,'Thea',8),(720,'Elwin',10),(874,'Casper',24),(880,'Ramona',21);
+INSERT INTO `subjects` VALUES (0,' information Technology ',489),(2,' chemistry',554),(7,' chemistry',559),(38,'math',130),(126,' geometry',880),(233,' social science',391),(701,' geometry',880),(2254,' chemistry',619),(6316,' english',619),(53808,' chemistry',720),(67236,' english',250),(68460,' english',559),(486414,' english',874),(565272,' social science',250),(894059,' physics',554),(1748408,' reading',391),(34813127,' reading',720),(298112619,' information Technology ',489),(768166559,'math',130),(794520218,' chemistry',874);
+INSERT INTO `profile` VALUES (1076,'dolores','Miss','East Summer',9925),(1090,'hic','Miss','East Korey',9389),(1114,'quis','Prof.','New Kayden',2614),(1150,'velit','Prof.','South Elizabethville',7263),(1189,'dolores','Prof.','South Davinberg',2194),(1199,'vel','Prof.','Port Dannieburgh',4533),(1286,'incidunt','Miss','Aufderharside',7728),(1293,'repudiandae','Miss','South Caterinaville',5808),(1301,'hic','Dr.','North Corenehaven',3487),(1317,'molestiae','Prof.','Zakaryland',2598),(1419,'at','Dr.','Grantmouth',4531),(1443,'nihil','Prof.','Vandervortton',2504),(1447,'ut','Ms.','Port Leonorahaven',6945),(1459,'quibusdam','Prof.','South Olamouth',8431),(1539,'dolor','Ms.','Clarashire',3569),(1579,'eligendi','Miss','Port Johnnie',9452),(1588,'repellat','Miss','Klockoburgh',8052),(1642,'odit','Prof.','Grantside',8747),(1666,'ex','Dr.','New Brionnaview',2144),(1691,'quos','Dr.','New Amos',3180),(1698,'rem','Mr.','Lake Aurelia',3723),(1747,'qui','Dr.','West Chelsiefurt',2677),(1761,'sed','Prof.','Port Brady',4990),(1778,'eaque','Dr.','West Maxwellbury',2378),(1859,'nihil','Mr.','Jonathonborough',4267),(1942,'repellat','Mr.','Rosellachester',8484),(1956,'et','Mr.','East Gregoryborough',1295),(1980,'amet','Mrs.','Lake Alishaport',5549),(1985,'occaecati','Prof.','North Domenicburgh',3818),(2071,'eaque','Mr.','Guiseppemouth',7074),(2084,'laboriosam','Prof.','Henriburgh',6095),(2155,'possimus','Prof.','South Vincenzomouth',3163),(2183,'hic','Prof.','Robelburgh',2199),(2184,'voluptas','Mr.','Port Krystelchester',4905),(2260,'laudantium','Prof.','Chazberg',8779),(2296,'molestiae','Prof.','Port Raoul',3735),(2301,'voluptas','Prof.','Lincolnmouth',4362),(2316,'ullam','Mr.','East Ninashire',8619),(2319,'sit','Mr.','Kuhnburgh',6640),(2339,'iure','Dr.','South Amir',3241),(2380,'occaecati','Dr.','Murrayburgh',7746),(2432,'blanditiis','Mrs.','Raynortown',7522),(2487,'sunt','Miss','Port Alysson',4753),(2533,'aut','Mr.','Jeanettefurt',8048),(2584,'neque','Prof.','Araview',3085),(2596,'dolores','Dr.','Nicklausport',3699),(2633,'et','Dr.','Gastonstad',7188),(2688,'quas','Miss','East Kyleighfurt',2014),(2689,'aut','Prof.','East Aniya',1089),(2797,'mollitia','Miss','West Judson',3682),(2838,'facilis','Prof.','Lonzobury',6312),(2858,'et','Ms.','West Heaven',4865),(2958,'voluptatem','Prof.','East Ciara',7176),(3085,'minus','Mr.','Kerlukeborough',7169),(3110,'vel','Prof.','Bergstrombury',6932),(3252,'repudiandae','Prof.','West Quincyshire',7552),(3311,'minus','Prof.','Lake Dannyport',9014),(3316,'nihil','Prof.','New Nikochester',2576),(3327,'non','Dr.','Gertrudeview',1415),(3420,'beatae','Dr.','Bridieborough',4955),(3530,'ad','Prof.','O\'Haraberg',5931),(3590,'eos','Miss','Annaton',5099),(3598,'aspernatur','Miss','Sawaynburgh',2117),(3605,'maxime','Mrs.','Lake Yadira',6657),(3631,'dolore','Dr.','East Jalyn',6291),(3671,'nobis','Dr.','Steuberfort',1763),(3692,'aut','Mrs.','Romanborough',4540),(3700,'nemo','Prof.','Port Colten',2282),(3729,'soluta','Miss','Evertville',1649),(3736,'perferendis','Prof.','Port Laila',6109),(3747,'deserunt','Prof.','Denesikfurt',1137),(3756,'sed','Dr.','Beahanchester',2303),(3775,'labore','Dr.','Brakusfurt',5214),(3862,'nihil','Prof.','Annieberg',8300),(3893,'temporibus','Ms.','Kodyport',2715),(3920,'quis','Mr.','North Ada',3122),(3940,'et','Dr.','Port Marlin',6125),(4002,'asperiores','Miss','Jasonhaven',6326),(4004,'rerum','Mrs.','Faefurt',2039),(4017,'nemo','Mrs.','North Priscilla',2695),(4076,'qui','Prof.','Welchport',7224),(4112,'quaerat','Ms.','New Pauline',6912),(4144,'consequatur','Prof.','New Jakayla',3849),(4158,'porro','Prof.','Hintzport',5934),(4171,'mollitia','Dr.','Danniestad',2886),(4179,'placeat','Ms.','Lednerport',6495),(4183,'minima','Miss','Boehmton',3066),(4233,'aspernatur','Miss','South Jacquelyn',6104),(4342,'ratione','Prof.','East Keshaun',5515),(4420,'consequatur','Miss','Johnathontown',5428),(4437,'dolore','Ms.','Bahringertown',8860),(4556,'et','Prof.','Jessburgh',2515),(4604,'animi','Dr.','Lake Shanonland',2460),(4619,'sit','Dr.','Port Vitaborough',2966),(4648,'nisi','Mr.','Pacochaborough',6191),(4656,'animi','Dr.','Port Felixton',7358),(4696,'dolor','Dr.','Wehnerhaven',1921),(4810,'deserunt','Mrs.','South Jadenside',1410),(4823,'minima','Mrs.','North Celestino',1383),(4867,'ex','Prof.','Murielmouth',5182);
+INSERT INTO `schedule` VALUES (120727,' reading',2144,391),(138080,' chemistry',2677,554),(181567,'math',2715,619),(240933,' english',2966,874),(244089,'math',1089,130),(253824,' physics',1383,489),(256923,' physics',1137,250),(261982,' social science',1410,554),(263817,' chemistry',2504,880),(285434,'math',2199,554),(290489,' geometry',3066,880),(332153,' physics',2886,720),(372032,' chemistry',2614,489),(393550,' information Technology ',2460,874),(421511,'math',2576,250),(543715,' physics',1763,720),(547213,' geometry',2515,130),(584615,' information Technology ',2039,130),(602696,' history',2695,559),(604814,' history',2378,720),(625683,' history',2282,559),(625948,' english',2194,489),(639742,' chemistry',2598,391),(640521,' social science',1295,391),(713086,' reading',1415,559),(732789,' geometry',2303,619),(738246,' chemistry',1921,874),(888681,' social science',2117,250),(941593,' information Technology ',2014,880),(973205,' history',1649,619);
